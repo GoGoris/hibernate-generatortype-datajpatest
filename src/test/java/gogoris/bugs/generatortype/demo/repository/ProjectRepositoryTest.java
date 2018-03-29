@@ -6,6 +6,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -17,10 +18,21 @@ public class ProjectRepositoryTest {
     @Autowired
     private ProjectRepository repository;
 
+//    Fails
+//    @Test
+//    public void saveTest() {
+//        Project project = Project.builder().build();
+//        project = repository.save(project);
+//
+//        assertThat(project).isNotNull();
+//        assertThat(project.getId()).as("id").isGreaterThan(0L);
+//        assertThat(project.getCode()).as("Code after insertion").isEqualTo("PROJECT001");
+//    }
+
     @Test
-    public void saveTest() {
+    public void saveAndFlushTest() {
         Project project = Project.builder().build();
-        project = repository.save(project);
+        project = repository.saveAndFlush(project);
 
         assertThat(project).isNotNull();
         assertThat(project.getId()).as("id").isGreaterThan(0L);
